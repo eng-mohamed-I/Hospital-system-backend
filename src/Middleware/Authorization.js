@@ -2,6 +2,7 @@ import { userModel } from "../../DB/models/user.model.js";
 import { generateToken, verifyToken } from "../units/tokenFunctions.js";
 import jwt, { decode } from "jsonwebtoken";
 
+// authorization
 export const isAdmin = (req, res, next) => {
   let { authorization } = req.headers;
   if (!authorization) {
