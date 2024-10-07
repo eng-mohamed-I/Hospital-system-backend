@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
-const url = "mongodb+srv://mohamedyasiiin1:ii94r6NDPwr5fsk5@learning.58c7u.mongodb.net/?retryWrites=true&w=majority&appName=hospital";
+import env from "dotenv";
+env.config();
 
-// const uri = "mongodb+srv://eslam:eslam@hospital.q8ghh.mongodb.net/?retryWrites=true&w=majority&appName=test";
-// const uri = "mongodb://localhost:27017/backend-graduation-project";
+const url = process.env.DATA_BASE_URL;
+
 export const connectionDB = mongoose
   .connect(url)
   .then(() => {
-    console.log("DB connected Successfully 👋");
+    console.log("DB connected Successfully");
   })
   .catch((err) => {
     console.log("connected failed", err);

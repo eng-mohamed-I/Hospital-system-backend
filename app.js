@@ -1,8 +1,6 @@
 import express from "express";
-
 import http from "http";
 import { Server } from "socket.io";
-
 import { connectionDB } from "./DB/connection.js";
 import userRoutes from "./src/modules/user/user.routes.js";
 import cors from "cors";
@@ -15,6 +13,7 @@ import departmentRoutes from "./src/modules/departments/department.routes.js";
 import patientRoutes from "./src/modules/patient/patient.routes.js";
 import { sendSMS } from "./src/services/sendSMS.js";
 import reportRoutes from "./src/modules/report/report.routes.js";
+import { rmSync } from "fs";
 
 const app = express();
 const port = 5000;
@@ -22,7 +21,7 @@ const port = 5000;
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*", 
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
@@ -40,6 +39,12 @@ app.use("/api/departments", departmentRoutes);
 app.use("/api/patient", patientRoutes);
 app.use("/api/report", reportRoutes);
 
+app.post("/test/:token", (req, res) => {
+  let { token } = req.params;
+  console.log(req.params);
+  return res.status(200).json({ message: token });
+});
+
 connectionDB;
 
 // sendSMS('201110498656', 'Your appointment is tomorrow at 10 AM.');
@@ -54,4 +59,4 @@ io.on("connection", (socket) => {
 
 export { io, port };
 
-server.listen(port, () => console.log(`Server running on port ${port} 🧬`));
+server.listen(port, () => console.log(`Server running on port ${port}`));
