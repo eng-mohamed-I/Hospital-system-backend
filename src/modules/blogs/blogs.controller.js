@@ -5,8 +5,6 @@ import { customAlphabet } from "nanoid";
 import cloudinary from "../../utilities/cloudinaryConfig.js";
 const nanoid = customAlphabet("123456_=!ascbhdtel", 5);
 
-
-
 // add new blog
 const addNewBlog = async (req, res, next) => {
   try {
@@ -27,7 +25,7 @@ const addNewBlog = async (req, res, next) => {
       body: req.body.body,
       Image: {
         secure_url, // Cloudinary secure URL
-        public_id,  // Cloudinary public ID
+        public_id, // Cloudinary public ID
       },
     };
 
@@ -88,7 +86,8 @@ const updateBlog = async (req, res, next) => {
     };
 
     // Check if an image is provided in the request
-    if (req.file) { // assuming you're using middleware like multer for file uploads
+    if (req.file) {
+      // assuming you're using middleware like multer for file uploads
       // Upload new image to Cloudinary
       const uploadResult = await cloudinary.uploader.upload(req.file.path, {
         folder: `Hospital/Blogs/${id}`, // Folder structure in Cloudinary
@@ -105,15 +104,15 @@ const updateBlog = async (req, res, next) => {
     }
 
     // Update blog
-    let updatedBlog = await blogsModel.findByIdAndUpdate(id, updateData, { new: true }); // 'new: true' to return the updated document
+    let updatedBlog = await blogsModel.findByIdAndUpdate(id, updateData, {
+      new: true,
+    }); // 'new: true' to return the updated document
 
     res.status(200).json({ message: "blog updated successfully", updatedBlog });
   } catch (error) {
     next(error); // Forward the error to the error handler
   }
 };
-
-
 
 // delete blogs
 const deleteBlog = async (req, res) => {

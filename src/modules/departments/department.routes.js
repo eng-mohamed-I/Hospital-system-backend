@@ -1,5 +1,5 @@
 import { Router } from "express";
-//new update
+import { isAdmin } from "../../Middleware/Authorization.js";
 import {
   createDepartment,
   getAllDepartments,
@@ -10,10 +10,10 @@ import {
 
 const departmentRoutes = Router();
 
-departmentRoutes.post("/create", createDepartment);
+departmentRoutes.post("/create", isAdmin, createDepartment);
 departmentRoutes.get("/", getAllDepartments);
 departmentRoutes.get("/:id", getDepartmentById);
-departmentRoutes.put("/:id", updateDepartment);
-departmentRoutes.delete("/:id", deleteDepartment);
+departmentRoutes.put("/:id", isAdmin, updateDepartment);
+departmentRoutes.delete("/:id", isAdmin, deleteDepartment);
 
 export default departmentRoutes;

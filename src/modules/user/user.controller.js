@@ -73,8 +73,7 @@ export const login = async (req, res, next) => {
       _id: userExsist._id,
       role: userExsist.role,
     },
-    "STITCH",
-    { expiresIn: "1h" }
+    "STITCH"
   );
 
   const userUpdated = await userModel.findOneAndUpdate(
