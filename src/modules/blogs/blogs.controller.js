@@ -10,7 +10,8 @@ const addNewBlog = async (req, res, next) => {
   try {
     // Generate a custom ID
     const customId = nanoid();
-
+    console.log(req.file);
+    console.log(req.body);
     // Upload file to Cloudinary (assuming file is available in the request)
     const uploadResult = await cloudinary.uploader.upload(req.file.path, {
       folder: `Hospital/Blogs/${customId}`, // Folder structure in Cloudinary
@@ -18,12 +19,13 @@ const addNewBlog = async (req, res, next) => {
 
     // Extract the Cloudinary URL and public ID
     const { secure_url, public_id } = uploadResult;
+    console.log(uploadResult);
 
     // Create a new blog object
     const blogData = {
       title: req.body.title,
       body: req.body.body,
-      Image: {
+      image: {
         secure_url, // Cloudinary secure URL
         public_id, // Cloudinary public ID
       },
@@ -35,6 +37,7 @@ const addNewBlog = async (req, res, next) => {
 
     res.status(201).json({ message: "Blog created successfully", newBlog });
   } catch (error) {
+    console.log(error);
     next(error); // Forward the error to the error handler
   }
 };

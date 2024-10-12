@@ -39,11 +39,11 @@ app.use("/api/departments", departmentRoutes);
 app.use("/api/patient", patientRoutes);
 app.use("/api/report", reportRoutes);
 
-app.post("/test/:token", (req, res) => {
-  let { token } = req.params;
-  console.log(req.params);
-  return res.status(200).json({ message: token });
-});
+// app.get("/test", (req, res) => {
+//   return res.status(200).json({ message: "work" });
+// });
+
+app.post("/test/upload", )
 
 connectionDB;
 
