@@ -19,7 +19,7 @@ export const isAdmin = (req, res, next) => {
           return res.status(400).json({ message: "you are not authorized" });
         }
         if (decoded.role !== "admin") {
-          return res.status(400).json({ message: "you are not authorized" });
+          return res.status(401).json({ message: "you are not authorized" });
         }
         next();
       }

@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { multerCloudFunction } from "../../services/multerCloud.js";
 import { allowedExtensions } from "../../utilities/allowedEtentions.js";
+import multer from "multer";
+import path from "path";
 
 import {
   addNewBlog,
@@ -9,12 +11,23 @@ import {
   getSingleBlog,
   updateBlog,
 } from "./blogs.controller.js";
+import { isAdmin } from "../../Middleware/Authorization.js";
 
 const blogRoutes = Router();
 
-blogRoutes.post("/", multerCloudFunction(allowedExtensions.Image).single('image'),addNewBlog);
-blogRoutes.put("/:id",multerCloudFunction(allowedExtensions.Image).single('image'), updateBlog);
-blogRoutes.delete("/:id", deleteBlog);
+blogRoutes.post(
+  "/",
+  isAdmin,
+  multerCloudFunction(allowedExtensions.Image).single("image"),
+  addNewBlog
+);
+blogRoutes.put(
+  "/:id",
+  isAdmin,
+  multerCloudFunction(allowedExtensions.Image).single("image"),
+  updateBlog
+);
+blogRoutes.delete("/:id", isAdmin, deleteBlog);
 blogRoutes.get("/", getAllBlogs);
 blogRoutes.get("/:id", getSingleBlog);
 

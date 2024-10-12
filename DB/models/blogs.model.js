@@ -2,10 +2,6 @@ import { model, Schema } from "mongoose";
 
 const blogsSchema = new Schema(
   {
-    url: {
-      type: String,
-      // required: true,
-    },
     title: {
       type: String,
       required: true,
@@ -14,7 +10,7 @@ const blogsSchema = new Schema(
       type: String,
       required: true,
     },
-    Image: {
+    image: {
       secure_url: {
         type: String,
         required: true,
