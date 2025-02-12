@@ -1,11 +1,12 @@
-import { port } from "../../../app.js";
-import { patientModel } from "../../../DB/models/patient.model.js";
-import { sendEmailService } from "../../services/sendEmailServecies.js";
-import { patientEmailTemp } from "../../units/patientEmail.template.js";
+import { port } from "../app.js";
+import { patientModel } from "../models/patient.model.js";
+import { sendEmailService } from "../services/sendEmailServecies.js";
+import { patientEmailTemp } from "../units/patientEmail.template.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { resetPasswordTemp } from "../../units/resetPasswordTemplate.js";
+import { resetPasswordTemp } from "../units/resetPasswordTemplate.js";
 import mongoose from "mongoose";
+//======================================================
 
 // update from admin
 const updateAdminPatient = async (req, res) => {
@@ -337,6 +338,7 @@ const updateDonation = async (req, res) => {
   });
 };
 
+//======================================================
 export {
   signup,
   verifyEmail,
