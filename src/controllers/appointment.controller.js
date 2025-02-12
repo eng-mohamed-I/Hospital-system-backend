@@ -1,15 +1,16 @@
 import Stripe from "stripe";
-// import { io } from "../../../app.js";
-import { appointmentModel } from "../../../DB/models/appointment.model.js";
-import { doctorModel } from "../../../DB/models/doctor.model.js";
-import { patientModel } from "../../../DB/models/patient.model.js";
-import { sendSMS } from "../../services/sendSMS.js";
+// import { io } from "../app.js";
+import { appointmentModel } from "../models/appointment.model.js";
+import { doctorModel } from "../models/doctor.model.js";
+import { patientModel } from "../models/patient.model.js";
+import { sendSMS } from "../services/sendSMS.js";
 import jwt from "jsonwebtoken";
+//==========================================================
 const stripe = new Stripe(
   "sk_test_51Q0Stx1BDc3FGejoe8y5l8EKXCy9zylTH6kWjLmWqVUKUsgvbgLi1ZCbotQefcrRxkRlMoAVMfDyGVtAHSUounpY00DVLBjyO3"
 );
 
-export const getAppointmentDetails = async (req, res) => {
+const getAppointmentDetails = async (req, res) => {
   try {
     const { appointmentID } = req.params;
     const appointment = await appointmentModel
@@ -35,8 +36,7 @@ export const getAppointmentDetails = async (req, res) => {
   }
 };
 
-// Book appointment
-export const bookAppointment = async (req, res) => {
+const bookAppointment = async (req, res) => {
   try {
     const { doctorID, patientEmail, date, time, department, price } = req.body;
 
@@ -121,7 +121,7 @@ export const bookAppointment = async (req, res) => {
   }
 };
 
-export const updateAppointmentStatus = async (req, res) => {
+const updateAppointmentStatus = async (req, res) => {
   try {
     const { appointmentID } = req.params;
     const { status } = req.body;
@@ -150,7 +150,7 @@ export const updateAppointmentStatus = async (req, res) => {
   }
 };
 
-export const getAppointmentsByPatientEmail = async (req, res) => {
+const getAppointmentsByPatientEmail = async (req, res) => {
   try {
     const { email } = req.params;
 
@@ -178,7 +178,7 @@ export const getAppointmentsByPatientEmail = async (req, res) => {
   }
 };
 
-export const addReportToAppointment = async (req, res) => {
+const addReportToAppointment = async (req, res) => {
   try {
     const { appointmentID } = req.params;
     const report = req.body;
@@ -196,7 +196,7 @@ export const addReportToAppointment = async (req, res) => {
     }
 
     // Add the report to the appointment
-    appointment.report = report; 
+    appointment.report = report;
     await appointment.save();
 
     res.status(200).json({ message: "Report added successfully", appointment });
@@ -205,7 +205,7 @@ export const addReportToAppointment = async (req, res) => {
   }
 };
 
-export const getAllAppointments = async (req, res) => {
+const getAllAppointments = async (req, res) => {
   try {
     const appointments = await appointmentModel
       .find()
@@ -223,8 +223,7 @@ export const getAllAppointments = async (req, res) => {
   }
 };
 
-// Cancel appointment
-export const cancelAppointment = async (req, res) => {
+const cancelAppointment = async (req, res) => {
   try {
     const { appointmentID } = req.params;
 
@@ -244,9 +243,7 @@ export const cancelAppointment = async (req, res) => {
   }
 };
 
-// +++++++++++++++++++++++++
-
-export const getDoctorAppointment = async (req, res) => {
+const getDoctorAppointment = async (req, res) => {
   try {
     let { token } = req.params;
     jwt.verify(token, "Doctor", async (error, decoded) => {
@@ -268,4 +265,15 @@ export const getDoctorAppointment = async (req, res) => {
   } catch (err) {
     res.stauts(500).json({ message: err.message });
   }
+};
+//==========================================================
+export {
+  getAppointmentDetails,
+  bookAppointment,
+  updateAppointmentStatus,
+  getAppointmentsByPatientEmail,
+  addReportToAppointment,
+  getAllAppointments,
+  cancelAppointment,
+  getDoctorAppointment,
 };

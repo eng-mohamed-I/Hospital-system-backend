@@ -1,13 +1,14 @@
-import { doctorModel } from "../../../DB/models/doctor.model.js";
+import { doctorModel } from "../models/doctor.model.js";
 import { customAlphabet } from "nanoid";
-import cloudinary from "../../utilities/cloudinaryConfig.js";
-const nanoid = customAlphabet("123456_=!ascbhdtel", 5);
+import cloudinary from "../utilities/cloudinaryConfig.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { departmentModel } from "../../../DB/models/department.model.js";
+import { departmentModel } from "../models/department.model.js";
 import mongoose from "mongoose";
+//======================================================
+const nanoid = customAlphabet("123456_=!ascbhdtel", 5);
 
-export const getAllDoctors = async (req, res) => {
+const getAllDoctors = async (req, res) => {
   try {
     const filters = {};
 
@@ -40,8 +41,7 @@ export const getAllDoctors = async (req, res) => {
   }
 };
 
-// Get a single doctor by ID
-export const getDoctorById = async (req, res) => {
+const getDoctorById = async (req, res) => {
   try {
     const doctor = await doctorModel
       .findById(req.params.id)
@@ -58,8 +58,7 @@ export const getDoctorById = async (req, res) => {
   }
 };
 
-// Create a new doctor
-export const createDoctor = async (req, res) => {
+const createDoctor = async (req, res) => {
   // Extract data from the request body
   try {
     const {
@@ -160,9 +159,7 @@ export const createDoctor = async (req, res) => {
   }
 };
 
-// Update a doctor by ID
-
-export const updateDoctor = async (req, res) => {
+const updateDoctor = async (req, res) => {
   try {
     let { availableDates, Image } = req.body;
 
@@ -214,7 +211,7 @@ export const updateDoctor = async (req, res) => {
   }
 };
 
-export const updateDoctorAvailableDate = async (req, res) => {
+const updateDoctorAvailableDate = async (req, res) => {
   try {
     // Validate that the availableDates array exists and follows the new structure
     const { availableDates } = req.body;
@@ -258,8 +255,7 @@ export const updateDoctorAvailableDate = async (req, res) => {
   }
 };
 
-// Delete a doctor by ID
-export const deleteDoctor = async (req, res) => {
+const deleteDoctor = async (req, res) => {
   try {
     const doctor = await doctorModel.findByIdAndDelete(req.params.id);
 
@@ -273,8 +269,7 @@ export const deleteDoctor = async (req, res) => {
   }
 };
 
-//  ^ doctor login
-export const login = async (req, res, next) => {
+const login = async (req, res, next) => {
   const { email, password } = req.body;
 
   // console.log(req.body);
@@ -304,9 +299,7 @@ export const login = async (req, res, next) => {
   });
 };
 
-// ! getDoctorsWithAppointments
-
-export const getDoctorsWithAppointments = async (req, res) => {
+const getDoctorsWithAppointments = async (req, res) => {
   try {
     const doctors = await doctorModel.find({}).populate({
       path: "appointments.appointID",
@@ -326,8 +319,7 @@ export const getDoctorsWithAppointments = async (req, res) => {
   }
 };
 
-// get department doctors
-export const getDepartmentDoctors = async (req, res) => {
+const getDepartmentDoctors = async (req, res) => {
   try {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -343,4 +335,17 @@ export const getDepartmentDoctors = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
+};
+
+//======================================================
+export {
+  createDoctor,
+  login,
+  getAllDoctors,
+  getDoctorById,
+  updateDoctorAvailableDate,
+  updateDoctor,
+  deleteDoctor,
+  getDoctorsWithAppointments,
+  getDepartmentDoctors,
 };

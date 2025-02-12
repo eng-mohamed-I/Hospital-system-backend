@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { multerCloudFunction } from "../../services/multerCloud.js";
-import { allowedExtensions } from "../../utilities/allowedEtentions.js";
+import { multerCloudFunction } from "../services/multerCloud.js";
+import { allowedExtensions } from "../utilities/allowedEtentions.js";
 import {
   createDoctor,
   deleteDoctor,
@@ -11,16 +11,14 @@ import {
   login,
   updateDoctor,
   updateDoctorAvailableDate,
-} from "./doctor.controller.js";
-import { isAdmin } from "../../middlewares/authorization.js";
-import { validateDoctor } from "../../middlewares/doctorValidators.js";
-
+} from "../controllers/doctor.controller.js";
+import { isAdmin } from "../middlewares/authorization.js";
+import { validateDoctor } from "../middlewares/doctorValidators.js";
+//======================================================
 const doctorRoutes = Router();
 
 doctorRoutes.get("/", getAllDoctors);
 doctorRoutes.get("/:id", getDoctorById);
-
-
 doctorRoutes.post(
   "/",
   multerCloudFunction(allowedExtensions.Image).single("image"),
@@ -32,12 +30,9 @@ doctorRoutes.put(
   updateDoctor
 );
 doctorRoutes.put("/A/:id", updateDoctorAvailableDate);
-
-doctorRoutes.delete('/:id', deleteDoctor); 
-doctorRoutes.post("/login",login)
-
+doctorRoutes.delete("/:id", deleteDoctor);
+doctorRoutes.post("/login", login);
 doctorRoutes.get("/department/:id", getDepartmentDoctors);
-
 doctorRoutes.get("/appoint", getDoctorsWithAppointments);
-
+//======================================================
 export default doctorRoutes;
