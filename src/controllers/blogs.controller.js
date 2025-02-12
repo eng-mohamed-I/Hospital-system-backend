@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
-import { blogsModel } from "../../../DB/models/blogs.model.js";
+import { blogsModel } from "../models/blogs.model.js";
 
 import { customAlphabet } from "nanoid";
-import cloudinary from "../../utilities/cloudinaryConfig.js";
+import cloudinary from "../utilities/cloudinaryConfig.js";
 const nanoid = customAlphabet("123456_=!ascbhdtel", 5);
-
+//======================================================
 // add new blog
 const addNewBlog = async (req, res, next) => {
   try {

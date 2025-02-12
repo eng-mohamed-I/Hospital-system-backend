@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { multerCloudFunction } from "../../services/multerCloud.js";
-import { allowedExtensions } from "../../utilities/allowedEtentions.js";
+import { multerCloudFunction } from "../services/multerCloud.js";
+import { allowedExtensions } from "../utilities/allowedEtentions.js";
 import multer from "multer";
 import path from "path";
 
@@ -10,9 +10,9 @@ import {
   getAllBlogs,
   getSingleBlog,
   updateBlog,
-} from "./blogs.controller.js";
-import { isAdmin } from "../../Middleware/Authorization.js";
-
+} from "../controllers/blogs.controller.js";
+import { isAdmin } from "../Middleware/Authorization.js";
+//==========================================================
 const blogRoutes = Router();
 
 blogRoutes.post(
