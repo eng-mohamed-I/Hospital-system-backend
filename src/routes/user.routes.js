@@ -5,7 +5,8 @@ import {
   login,
   register,
   resetPassword,
-} from "./user.controller.js";
+} from "../controllers/user.controller.js";
+//=========================================
 
 const userRoutes = Router();
 
@@ -14,4 +15,5 @@ userRoutes.post("/login", login);
 userRoutes.get("/confirm/:token", confirmEmail);
 userRoutes.post("/forget", forgetPassword);
 userRoutes.post("/reset/:token", resetPassword);
+
 export default userRoutes;

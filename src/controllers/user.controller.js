@@ -1,12 +1,12 @@
-import { userModel } from "../../../DB/models/user.model.js";
-import { sendEmailService } from "../../services/sendEmailServecies.js";
-import { emailTemplate } from "../../units/emailTemplate.js";
-import { generateToken, verifyToken } from "../../units/tokenFunctions.js";
+import { userModel } from "../models/user.model.js";
+import { sendEmailService } from "../services/sendEmailServecies.js";
+import { emailTemplate } from "../units/emailTemplate.js";
+import { generateToken, verifyToken } from "../units/tokenFunctions.js";
 import jwt from "jsonwebtoken";
 import pkg from "bcrypt";
 
 // ^ =============================== Register ============================================
-export const register = async (req, res, next) => {
+const register = async (req, res, next) => {
   const { email } = req.body;
   //is email exsisted
   const isExsisted = await userModel.findOne({ email });
@@ -40,7 +40,7 @@ export const register = async (req, res, next) => {
 };
 
 // ^ =============================== Confirm Email ============================================
-export const confirmEmail = async (req, res, next) => {
+const confirmEmail = async (req, res, next) => {
   const { token } = req.params;
 
   const decode = verifyToken({
@@ -59,7 +59,7 @@ export const confirmEmail = async (req, res, next) => {
 };
 
 // ^ =============================== Login ============================================
-export const login = async (req, res, next) => {
+const login = async (req, res, next) => {
   const { email, password } = req.body;
   const userExsist = await userModel.findOne({ email });
 
@@ -98,7 +98,7 @@ export const login = async (req, res, next) => {
 
 // ^ =============================== Forget Password ============================================
 import { nanoid } from "nanoid";
-export const forgetPassword = async (req, res, next) => {
+const forgetPassword = async (req, res, next) => {
   const { email } = req.body;
 
   const isExist = await userModel.findOne({ email });
@@ -139,7 +139,7 @@ export const forgetPassword = async (req, res, next) => {
 };
 
 // ^ =============================== Reset Password ============================================
-export const resetPassword = async (req, res, next) => {
+const resetPassword = async (req, res, next) => {
   const { token } = req.params;
   const decoded = verifyToken({ token, signature: "STITCH" }); // ! process.env.RESET_TOKEN
   const user = await userModel.findOne({
@@ -160,3 +160,5 @@ export const resetPassword = async (req, res, next) => {
   const updatedUser = await user.save();
   res.status(200).json({ message: "Done", updatedUser });
 };
+
+export { register, login, confirmEmail, forgetPassword, resetPassword };

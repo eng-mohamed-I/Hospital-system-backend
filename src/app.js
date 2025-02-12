@@ -1,9 +1,9 @@
 import express from "express";
+import env from "dotenv";
 import http from "http";
 import { Server } from "socket.io";
 import cors from "cors";
 
-// import userRoutes from "./src/modules/user/user.routes.js";
 // import blogRoutes from "./src/modules/blogs/blogs.routes.js";
 // import newsRoutes from "./src/modules/news/news.routes.js";
 // import specialiesRoutes from "./src/modules/specialies/specialies.routes.js";
@@ -15,7 +15,7 @@ import cors from "cors";
 
 import { sendSMS } from "./services/sendSMS.js";
 import { rmSync } from "fs";
-import env from "dotenv";
+import routes from "./routes/index.js";
 // ===========================================
 
 const app = express();
@@ -34,25 +34,22 @@ const io = new Server(server, {
 //============================================
 app.use(cors());
 app.use(express.json());
+//============================================
+//Routes
+
+app.use("/api/v1", routes);
 
 // app.use("/api/blogs", blogRoutes);
 // app.use("/api/news", newsRoutes);
 // app.use("/api/specialies", specialiesRoutes);
 // app.use("/api/doctors", doctorRoutes);
 // app.use("/api/appointments", appointmentRoutes);
-// app.use("/api/users", userRoutes);
 // app.use("/api/departments", departmentRoutes);
 // app.use("/api/patient", patientRoutes);
 // app.use("/api/report", reportRoutes);
-
-// app.get("/test", (req, res) => {
-//   return res.status(200).json({ message: "work" });
-// });
-
-app.post("/test/upload");
-
 // sendSMS('201110498656', 'Your appointment is tomorrow at 10 AM.');
 
+//============================================
 io.on("connection", (socket) => {
   console.log("New client connected:", socket.id);
 
