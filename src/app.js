@@ -3,24 +3,13 @@ import env from "dotenv";
 import http from "http";
 import { Server } from "socket.io";
 import cors from "cors";
-
-// import newsRoutes from "./src/modules/news/news.routes.js";
-// import specialiesRoutes from "./src/modules/specialies/specialies.routes.js";
-// import doctorRoutes from "./src/modules/doctors/doctor.routes.js";
-// import appointmentRoutes from "./src/modules/appointments/appointment.routes.js";
-// import patientRoutes from "./src/modules/patient/patient.routes.js";
-// import reportRoutes from "./src/modules/report/report.routes.js";
-
-import { sendSMS } from "./services/sendSMS.js";
-import { rmSync } from "fs";
 import routes from "./routes/index.js";
+import handleGlobalError from "./middlewares/error.middleware.js";
+import catchRoutes from "./middlewares/catchRoutes.middleware.js";
 // ===========================================
-
 const app = express();
 env.config();
 const port = 5000;
-
-
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
@@ -28,23 +17,17 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
+
 //============================================
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: "10k" })); // stream recived 10kb of chunk
 //============================================
 //Routes
 
 app.use("/api/v1", routes);
-
-// app.use("/api/news", newsRoutes);
-// app.use("/api/specialies", specialiesRoutes);
-// app.use("/api/doctors", doctorRoutes);
-// app.use("/api/appointments", appointmentRoutes);
-// app.use("/api/patient", patientRoutes);
-// app.use("/api/report", reportRoutes);
-// sendSMS('201110498656', 'Your appointment is tomorrow at 10 AM.');
-
 //============================================
+
+
 io.on("connection", (socket) => {
   console.log("New client connected:", socket.id);
 
@@ -52,7 +35,21 @@ io.on("connection", (socket) => {
     console.log("Client disconnected:", socket.id);
   });
 });
+//============================================
+//Handle errors
 
-export { app, port };
+app.all("*", catchRoutes);
 
-// server.listen(port, () => console.log(`Server running on port ${port}`));
+app.use(handleGlobalError);
+
+process.on("uncaughtException", (err) => {
+  console.log("Uncaught Exception: ", err);
+  process.exit(1); //turn of app
+});
+
+process.on("Unhandled Rejection", (reason) => {
+  console.log("Unhandled Rejection ");
+  throw reason;
+});
+//============================================
+export default app;

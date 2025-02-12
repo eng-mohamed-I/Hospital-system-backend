@@ -1,4 +1,3 @@
-import { port } from "../app.js";
 import { patientModel } from "../models/patient.model.js";
 import { sendEmailService } from "../services/sendEmailServecies.js";
 import { patientEmailTemp } from "../units/patientEmail.template.js";
@@ -8,6 +7,7 @@ import { resetPasswordTemp } from "../units/resetPasswordTemplate.js";
 import mongoose from "mongoose";
 //======================================================
 
+const port = process.env.PORT;
 // update from admin
 const updateAdminPatient = async (req, res) => {
   let { id } = req.params;
