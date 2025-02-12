@@ -1,6 +1,7 @@
-import { specialiesModel } from "../../../DB/models/specialtise.model.js";
+import { specialiesModel } from "../models/specialtise.model.js";
+//======================================================
 
-export const createSpecialies = async (req, res, next) => {
+const createSpecialies = async (req, res, next) => {
   const newData = req.body;
 
   const specialies = await specialiesModel.insertMany(newData);
@@ -9,8 +10,7 @@ export const createSpecialies = async (req, res, next) => {
 
   res.status(201).json({ message: "Added", specialies });
 };
-
-export const getAllSpecialies = async (req, res, next) => {
+const getAllSpecialies = async (req, res, next) => {
   const specialies = await specialiesModel.find();
 
   if (!specialies)
@@ -18,8 +18,7 @@ export const getAllSpecialies = async (req, res, next) => {
 
   res.status(201).json({ message: "news:", specialies });
 };
-
-export const getSingleSpecialies = async (req, res, next) => {
+const getSingleSpecialies = async (req, res, next) => {
   const { id } = req.params;
 
   const speciality = await specialiesModel.findById(id);
@@ -28,3 +27,5 @@ export const getSingleSpecialies = async (req, res, next) => {
 
   res.status(200).json({ message: "Done", speciality });
 };
+//======================================================
+export { createSpecialies, getAllSpecialies, getSingleSpecialies };
