@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
-import { departmentModel } from "../../../DB/models/department.model.js";
-import { customAlphabet } from 'nanoid'
+import { departmentModel } from "../models/department.model.js";
+//==============================================================
 
-//new update
 // Create a new department
-export const createDepartment = async (req, res) => {
+const createDepartment = async (req, res) => {
   try {
     const { name, description, doctors } = req.body;
 
@@ -27,7 +26,7 @@ export const createDepartment = async (req, res) => {
 };
 
 // Get all departments
-export const getAllDepartments = async (req, res) => {
+const getAllDepartments = async (req, res) => {
   try {
     const departments = await departmentModel.find().populate("doctors");
 
@@ -39,10 +38,10 @@ export const getAllDepartments = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
+};
 
 // Get a department by ID
-export const getDepartmentById = async (req, res) => {
+const getDepartmentById = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -61,7 +60,7 @@ export const getDepartmentById = async (req, res) => {
 };
 
 // Update a department by ID
-export const updateDepartment = async (req, res) => {
+const updateDepartment = async (req, res) => {
   const { name } = req.body;
   const { id } = req.params;
 
@@ -97,7 +96,7 @@ export const updateDepartment = async (req, res) => {
 };
 
 // Delete a department by ID
-export const deleteDepartment = async (req, res) => {
+const deleteDepartment = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ message: "Invalid Id" });
@@ -111,4 +110,14 @@ export const deleteDepartment = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+};
+
+//==============================================================
+
+export {
+  createDepartment,
+  getAllDepartments,
+  getDepartmentById,
+  updateDepartment,
+  deleteDepartment,
 };

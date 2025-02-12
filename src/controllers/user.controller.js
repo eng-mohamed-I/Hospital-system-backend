@@ -4,6 +4,7 @@ import { emailTemplate } from "../units/emailTemplate.js";
 import { generateToken, verifyToken } from "../units/tokenFunctions.js";
 import jwt from "jsonwebtoken";
 import pkg from "bcrypt";
+//======================================================
 
 // ^ =============================== Register ============================================
 const register = async (req, res, next) => {
@@ -161,4 +162,5 @@ const resetPassword = async (req, res, next) => {
   res.status(200).json({ message: "Done", updatedUser });
 };
 
+//======================================================
 export { register, login, confirmEmail, forgetPassword, resetPassword };

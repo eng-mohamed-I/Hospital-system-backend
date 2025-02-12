@@ -132,5 +132,5 @@ const deleteBlog = async (req, res) => {
 
   return res.status(200).json({ message: "blog deleted successfully" });
 };
-
+//======================================================
 export { updateBlog, deleteBlog, getSingleBlog, addNewBlog, getAllBlogs };
