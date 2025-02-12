@@ -1,4 +1,5 @@
 import { model, Schema } from "mongoose";
+//=======================================
 
 const doctorSchema = new Schema(
   {
@@ -39,27 +40,27 @@ const doctorSchema = new Schema(
       ref: "Department",
       required: true,
     },
-// Update availableDates to store objects instead of dates
-availableDates: [
-  {
-    date: {
-      type: Date,
-      // required: true,
+    // Update availableDates to store objects instead of dates
+    availableDates: [
+      {
+        date: {
+          type: Date,
+          // required: true,
+        },
+        fromTime: {
+          type: String,
+          // required: true,
+        },
+        toTime: {
+          type: String,
+          // required: true,
+        },
+      },
+    ],
+    price: {
+      type: Number,
+      required: true,
     },
-    fromTime: {
-      type: String,
-      // required: true,
-    },
-    toTime: {
-      type: String,
-      // required: true,
-    }
-  }
-],
-price:{
-  type:Number,
-  required: true
-},
     phone: {
       type: String,
       required: true,
@@ -102,10 +103,10 @@ price:{
       type: Map,
       of: Number,
     },
-    role:{
-      type:String,
-      enum:['doctor'],
-      default:'doctor'
+    role: {
+      type: String,
+      enum: ["doctor"],
+      default: "doctor",
     },
     appointments: [
       {

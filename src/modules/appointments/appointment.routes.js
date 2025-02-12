@@ -1,5 +1,4 @@
 import { Router } from "express";
-
 import {
   addReportToAppointment,
   bookAppointment,
@@ -10,6 +9,7 @@ import {
   getDoctorAppointment,
   updateAppointmentStatus,
 } from "./appointment.controller.js";
+
 const appointmentRoutes = Router();
 
 appointmentRoutes.get("/:appointmentID", getAppointmentDetails);
