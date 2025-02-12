@@ -1,5 +1,5 @@
 import Stripe from "stripe";
-import { io } from "../../../app.js";
+// import { io } from "../../../app.js";
 import { appointmentModel } from "../../../DB/models/appointment.model.js";
 import { doctorModel } from "../../../DB/models/doctor.model.js";
 import { patientModel } from "../../../DB/models/patient.model.js";

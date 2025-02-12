@@ -3,7 +3,7 @@ import { reportModel } from "../../../DB/models/report.js";
 import { patientModel } from "../../../DB/models/patient.model.js";
 import { doctorModel } from "../../../DB/models/doctor.model.js";
 import { departmentModel } from "../../../DB/models/department.model.js";
-import { io } from "../../../app.js";
+// import { io } from "../../../app.js";
 
 let addReport = async (req, res) => {
   try {
@@ -29,7 +29,7 @@ let addReport = async (req, res) => {
 
     // Save the report
     await report.save();
-    io.emit("newReport", report);
+    // io.emit("newReport", report);
 
     return res.status(201).json({ message: "Report created successfully", report });
   } catch (error) {
