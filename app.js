@@ -1,7 +1,6 @@
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
-import { connectionDB } from "./DB/connection.js";
 import userRoutes from "./src/modules/user/user.routes.js";
 import cors from "cors";
 import blogRoutes from "./src/modules/blogs/blogs.routes.js";
@@ -14,9 +13,15 @@ import patientRoutes from "./src/modules/patient/patient.routes.js";
 import { sendSMS } from "./src/services/sendSMS.js";
 import reportRoutes from "./src/modules/report/report.routes.js";
 import { rmSync } from "fs";
+import env from "dotenv";
+import connectDB from "./src/config/dbConnection.js";
+// ===========================================
 
 const app = express();
+env.config();
 const port = 5000;
+
+connectDB();
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -25,7 +30,7 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
-
+//============================================
 app.use(cors());
 app.use(express.json());
 
@@ -43,9 +48,7 @@ app.use("/api/report", reportRoutes);
 //   return res.status(200).json({ message: "work" });
 // });
 
-app.post("/test/upload", )
-
-connectionDB;
+app.post("/test/upload");
 
 // sendSMS('201110498656', 'Your appointment is tomorrow at 10 AM.');
 
@@ -57,6 +60,6 @@ io.on("connection", (socket) => {
   });
 });
 
-export { io, port };
+export { app, io, port };
 
 server.listen(port, () => console.log(`Server running on port ${port}`));
