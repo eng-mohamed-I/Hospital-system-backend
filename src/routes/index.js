@@ -10,11 +10,12 @@ import reportRoutes from "./report.routes.js";
 //======================================================
 const routes = Router();
 
-routes.use("/users", userRoutes);
-routes.use("/patients", patientRoutes);
-routes.use("/doctors", doctorRoutes);
+routes.use("/auth/users", userRoutes);
+routes.use("/auth/patients", patientRoutes);
+routes.use("/auth/doctors", doctorRoutes);
 routes.use("/blogs", blogRoutes);
 routes.use("/news", newsRoutes);
+
 routes.use("/departments", departmentRoutes);
 routes.use("/appointments", appointmentRoutes);
 routes.use("/reports", reportRoutes);

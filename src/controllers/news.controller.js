@@ -1,4 +1,5 @@
 import { newsModel } from "../models/news.model.js";
+//=================================================
 
 const addNewNews = async (req, res, next) => {
   const news = req.body;

@@ -1,7 +1,4 @@
 import { v2 as cloudinary } from "cloudinary";
-import env from "dotenv";
-
-env.config();
 
 cloudinary.config({
   cloud_name: "dahiqig4o",

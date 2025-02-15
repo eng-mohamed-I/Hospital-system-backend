@@ -14,18 +14,18 @@ import {
   verifyEmail,
 } from "../controllers/patient.controller.js";
 //=============================================
-
 const patientRoutes = Router();
-patientRoutes.get("/", getAllPatients);
-patientRoutes.post("/signup", signup);
+
+patientRoutes.post("/sign-up", signup);
+patientRoutes.post("/sign-in", signin);
 patientRoutes.get("/verify/:token", verifyEmail);
-patientRoutes.post("/signin", signin);
-patientRoutes.post("/forget", forgetPassword);
-patientRoutes.post("/reset/:token", resetPassword);
-patientRoutes.post("/updatepassword/:token", updatePassword);
-patientRoutes.post("/updatePatient/:token", updatePatient);
-patientRoutes.put("/:id", updateAdminPatient);
+patientRoutes.post("/forget-password", forgetPassword);
+patientRoutes.post("/reset-password/:token", resetPassword);
+patientRoutes.post("/update-password/:token", updatePassword);
+patientRoutes.get("/", getAllPatients);
 patientRoutes.delete("/:id", deletePatient);
+patientRoutes.post("/update-atient/:token", updatePatient);
+patientRoutes.put("/:id", updateAdminPatient);
 patientRoutes.get("/:id", getPatientById);
 patientRoutes.post("/updateDonation/:token", updateDonation);
 //=============================================
